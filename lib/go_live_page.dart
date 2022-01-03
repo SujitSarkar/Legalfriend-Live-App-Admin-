@@ -25,31 +25,27 @@ class _GoLivePageState extends State<GoLivePage> {
   @override
   void initState() {
     super.initState();
-
     for(int i=0;i<=200;i++){
       _serialNumberList.add(i);
     }
     setState((){});
   }
-
+//   onWillPop: () async {
+//   await _closeLive();
+//   return true;
+// },
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
-        await _closeLive();
-        return true;
-      },
-      child: Scaffold(
-        body: Stack(
-          children: [
-            _showSerialWindow
-                ? _showSerialListWidget(size)
-                : _bodyUI(size),
-          ],
-        ),
-        bottomNavigationBar: const BottomTile(),
+    return Scaffold(
+      body: Stack(
+        children: [
+          _showSerialWindow
+              ? _showSerialListWidget(size)
+              : _bodyUI(size),
+        ],
       ),
+      bottomNavigationBar: const BottomTile(),
     );
   }
 
@@ -103,6 +99,7 @@ class _GoLivePageState extends State<GoLivePage> {
                     if (snapshot.hasData) {
                       return ListView.builder(
                         shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             DocumentSnapshot doc = snapshot.data!.docs[index];

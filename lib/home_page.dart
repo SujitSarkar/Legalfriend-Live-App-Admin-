@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.hasData) {
                   return ListView.builder(
                       shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         DocumentSnapshot doc = snapshot.data!.docs[index];
