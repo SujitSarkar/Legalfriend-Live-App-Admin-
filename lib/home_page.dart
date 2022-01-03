@@ -77,6 +77,30 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: size.width * .1))
                                 :Text('[ লাইভ বন্ধ আছে ]',textAlign:TextAlign.center,style: TextStyle(color: const Color(0xffFF0000),
                                 fontSize: size.width * .1)),
+
+                            SizedBox(height: size.width*.3),
+
+                            _isLoading
+                                ?loadingWidget()
+                                : GradientButton(
+                              onPressed: ()async{
+                                setState(()=>_isLoading=true);
+                                await FirebaseFirestore.instance.collection('LiveSerial').doc('123456').update({
+                                  'is_live': true,
+                                });
+                                setState(()=>_isLoading=false);
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=>const GoLivePage()));
+                              },
+                              child: Text(doc['is_live']?'Update Serial No':'GO LIVE',
+                                  style: TextStyle(fontSize: size.width * .06)),
+                              height: size.width * .12,
+                              width: size.width * .8,
+                              borderRadius: size.width * .03,
+                              gradientColors:const [
+                                Color(0xffCB081B),
+                                Color(0xff9B0C17),
+                              ],
+                            ),
                           ],
                         );
                       });
@@ -90,29 +114,7 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
-            SizedBox(height: size.width*.3),
 
-            _isLoading
-                ?loadingWidget()
-                : GradientButton(
-              onPressed: ()async{
-                setState(()=>_isLoading=true);
-                await FirebaseFirestore.instance.collection('LiveSerial').doc('123456').update({
-                  'is_live': true,
-                });
-                setState(()=>_isLoading=false);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>const GoLivePage()));
-              },
-              child: Text('GO LIVE',
-                  style: TextStyle(fontSize: size.width * .06)),
-              height: size.width * .12,
-              width: size.width * .8,
-              borderRadius: size.width * .03,
-              gradientColors:const [
-                Color(0xffCB081B),
-                Color(0xff9B0C17),
-              ],
-            ),
           ],
         ),
       ),

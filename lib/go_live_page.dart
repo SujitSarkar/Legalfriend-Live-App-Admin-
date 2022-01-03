@@ -158,7 +158,7 @@ class _GoLivePageState extends State<GoLivePage> {
                                     child: Text(doc['serial_number'].toString(),
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: size.width * .28,
+                                            fontSize: size.width * .27,
                                             fontWeight: FontWeight.bold)),
                                   ),
                                 ),
@@ -250,7 +250,10 @@ class _GoLivePageState extends State<GoLivePage> {
                 style: TextStyle(fontSize: size.width*.1,
                     color: e==_selectedSerial
                         ? Colors.green
-                        : Colors.black),
+                        : PColor.livePageBgColor,
+                fontWeight: e==_selectedSerial
+                    ? FontWeight.w900
+                    : FontWeight.w400,),
               ),
             )).toList(),
           ),
@@ -286,7 +289,7 @@ class _GoLivePageState extends State<GoLivePage> {
   void _animateToIndex(int index){
     _scrollController.animateToItem(
         index,
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 600),
         curve: Curves.linear);
   }
 
