@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage> {
                     width: size.width * .5,
                     color: Colors.grey.shade300,
                     alignment: Alignment.center,
+                    child: Text('Loading...',style: TextStyle(color: Colors.grey.shade800,fontSize: size.width*.045),),
                   );
                 }
               },

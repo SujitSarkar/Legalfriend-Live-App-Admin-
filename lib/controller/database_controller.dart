@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:live_admin_app/widget_tile/loading_widget.dart';
 
 class DatabaseController{
@@ -38,6 +39,40 @@ class DatabaseController{
       return false;
     } catch(error){
       showToast(error.toString());
+      return false;
+    }
+  }
+
+  Future<bool> uploadImageList(List<dynamic>? previousImageLinks, List<File> imageList)async{
+    try{
+      List<String> _downloadUrls = [];
+      final FirebaseStorage storageReference = FirebaseStorage.instance;
+      ///Delete previous images from Firestore
+      if(previousImageLinks!=null && previousImageLinks.isNotEmpty){
+        await Future.forEach(previousImageLinks, (element)async{
+          storageReference.refFromURL(element as String).delete();
+        });
+      }
+      ///Upload new image list into Storage
+      await Future.forEach(imageList, (File image) async {
+        Reference ref = FirebaseStorage.instance
+            .ref()
+            .child('serial_image')
+            .child('${DateTime.now().millisecondsSinceEpoch}');
+        final UploadTask uploadTask = ref.putFile(image);
+        final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
+        final url = await taskSnapshot.ref.getDownloadURL();
+        _downloadUrls.add(url);
+      });
+      ///Insert new image link into Firestore
+      await FirebaseFirestore.instance.collection('LiveSerial').doc('123456').update({
+        'image_list': _downloadUrls
+      });
+      return true;
+    }on SocketException{
+      showToast('No internet connection');
+      return false;
+    } catch(error){
       return false;
     }
   }

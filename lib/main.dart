@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:live_admin_app/home_page.dart';
 import 'package:live_admin_app/splash_screen.dart';
 import 'pColor.dart';
 
@@ -13,7 +12,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
