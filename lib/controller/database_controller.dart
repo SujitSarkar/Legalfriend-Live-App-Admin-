@@ -66,7 +66,8 @@ class DatabaseController{
       });
       ///Insert new image link into Firestore
       await FirebaseFirestore.instance.collection('LiveSerial').doc('123456').update({
-        'image_list': _downloadUrls
+        'image_list': _downloadUrls,
+        'image_update_date': DateTime.now().millisecondsSinceEpoch
       });
       return true;
     }on SocketException{

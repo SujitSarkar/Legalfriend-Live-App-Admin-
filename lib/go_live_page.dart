@@ -230,22 +230,14 @@ class _GoLivePageState extends State<GoLivePage> {
                                                   doc['image_list'].length,
                                               itemBuilder: (_, index) =>
                                                   InkWell(
-                                                    onTap: () => Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                PhotoViewPage(imageList: doc['image_list']))),
+                                                    onTap: () => Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context) => PhotoViewPage(imageList: doc['image_list']))),
                                                     child: CachedNetworkImage(
-                                                      imageUrl:
-                                                          doc['image_list']
-                                                              [index],
-                                                      placeholder: (context,
-                                                              url) =>
+                                                      imageUrl: doc['image_list'][index],
+                                                      placeholder: (context, url) =>
                                                           Icon(Icons.image,
-                                                              size: size.width *
-                                                                  .25,
-                                                              color:
-                                                                  Colors.grey),
+                                                              size: size.width * .25,
+                                                              color: Colors.grey),
                                                       errorWidget: (context,
                                                               url, error) =>
                                                           Icon(Icons.error,
@@ -330,14 +322,13 @@ class _GoLivePageState extends State<GoLivePage> {
                 diameterRatio: 1.5,
                 squeeze: 1,
                 physics: const FixedExtentScrollPhysics(),
-                onSelectedItemChanged: (index) =>
-                    setState(() => _selectedSerial = index),
+                onSelectedItemChanged: (index)=>
+                    setState(()=> _selectedSerial = index),
                 children: _serialNumberList
                     .map((e) => Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                              border:
-                                  Border.all(color: Colors.green, width: 1)),
+                              border: Border.all(color: Colors.green, width: 1)),
                           child: Text(
                             e.toString(),
                             style: TextStyle(
